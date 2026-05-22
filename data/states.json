@@ -1,0 +1,142 @@
+[
+  {
+    "id": "8ce66a55-5001-436a-97ec-86daecffcca8",
+    "name": "commande_recue",
+    "description": "Commande reçue",
+    "color": "1e88e5",
+    "ranking": 1
+  },
+  {
+    "id": "0cc183e6-b834-42ec-a82e-50b32a5e2477",
+    "name": "en_traitement",
+    "description": "Commande en traitement",
+    "color": "ffb300",
+    "ranking": 2
+  },
+  {
+    "id": "5a6a48b4-19f5-4a73-baf6-e41b08f4564d",
+    "name": "appel_confirmation",
+    "description": "Appel de confirmation",
+    "color": "f57c00",
+    "ranking": 3
+  },
+  {
+    "id": "18af0e67-10b6-4a2e-84ee-39e79069801f",
+    "name": "commande_confirmee",
+    "description": "Commande confirmée",
+    "color": "43a047",
+    "ranking": 6
+  },
+  {
+    "id": "f1a05b54-35d9-45e0-b5c1-ed6a7a81ae87",
+    "name": "en_preparation",
+    "description": "En préparation",
+    "color": "1e88e5",
+    "ranking": 7
+  },
+  {
+    "id": "8a948c66-1ab7-4433-aeb0-94219125d134",
+    "name": "pret_a_expedier",
+    "description": "Prêt à expédier",
+    "color": "0288d1",
+    "ranking": 8
+  },
+  {
+    "id": "abe82977-bc6b-4c89-9553-d2ced1e635dd",
+    "name": "confirme_au_bureau",
+    "description": "Confirmé au bureau",
+    "color": "6a1b9a",
+    "ranking": 9
+  },
+  {
+    "id": "a4f79a82-d169-4d6d-9b43-f3db462a2b07",
+    "name": "remboursement_reinjecte",
+    "description": "Remboursement Reinjecte",
+    "color": "6a1b9a",
+    "ranking": 10
+  },
+  {
+    "id": "9372c116-097f-42e4-bede-0946f52c5e6d",
+    "name": "dispatch",
+    "description": "Dispatch dans la même wilaya",
+    "color": "c2185b",
+    "ranking": 11
+  },
+  {
+    "id": "66ebba7f-026c-46a9-8c9a-beef756cb84b",
+    "name": "vers_wilaya",
+    "description": "Dispatch dans une autre wilaya",
+    "color": "d32f2f",
+    "ranking": 12
+  },
+  {
+    "id": "22335295-79af-458b-8663-beea6b3ac5e2",
+    "name": "en_livraison",
+    "description": "En livraison",
+    "color": "ff6f00",
+    "ranking": 13
+  },
+  {
+    "id": "56a41e8c-63f8-459a-a3c2-f61d3964466b",
+    "name": "en_attente_dechange",
+    "description": "En attente d'échange",
+    "color": "ff6f00",
+    "ranking": 14
+  },
+  {
+    "id": "4bfb2bfd-506a-4f51-9354-21e4adf3e8cc",
+    "name": "colis_recupere",
+    "description": "Colis récupéré",
+    "color": "ff6f00",
+    "ranking": 15
+  },
+  {
+    "id": "93eb7fca-ebe6-4233-a9a6-69c8ba0f93db",
+    "name": "attente_recuperation_fournisseur",
+    "description": "En attente récupération fournisseur",
+    "color": "ff6f00",
+    "ranking": 16
+  },
+  {
+    "id": "31c0a76d-628e-46e6-a9ce-c6db3fba7f11",
+    "name": "reinjecte_dans_stock",
+    "description": "Réinjecté dans le stock",
+    "color": "4caf50",
+    "ranking": 17
+  },
+  {
+    "id": "66aa492f-d40a-4727-a20c-a4fd690e7486",
+    "name": "recupere_par_fournisseur",
+    "description": "Récupéré par fournisseur",
+    "color": "ff6f00",
+    "ranking": 18
+  },
+  {
+    "id": "95bc5a68-03f4-497d-8c96-81c4d0ff14ae",
+    "name": "sortie_en_livraison",
+    "description": "Sortie en livraison",
+    "color": "ff6f00",
+    "ranking": 19
+  },
+  {
+    "id": "8359ea70-5d8d-4f87-b4cb-7333fdb083bd",
+    "name": "livre",
+    "description": "Livré",
+    "color": "388e3c",
+    "ranking": 20
+  },
+  {
+    "id": "f34dfc2c-ecfe-4e06-9a19-430d2d0b27b9",
+    "name": "encaisse",
+    "description": "Encaissé",
+    "color": "00796b",
+    "ranking": 21
+  },
+  {
+    "id": "5f0c2807-6565-4dd3-8fe2-23b00b6cc8bd",
+    "name": "recouvert",
+    "description": "Recouvert",
+    "color": "00796b",
+    "ranking": 22
+  }
+]

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="/index.css">
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/x-icon" href="/icon.ico" />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>pix tech pos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Lato:wght@100;300;400;700;900&family=Open+Sans:wght@300..800&family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Roboto:wght@100;300;400;500;700;900&display=swap"
+    rel="stylesheet">
+  <!-- PDF Generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+  <!-- Excel Generation (Simple CSV) -->
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+  <!-- Advanced Excel (Images & Styles) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.3.0/exceljs.min.js"></script>
+  <!-- Zip Extraction -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <!-- Barcode Generation -->
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+  <style>
+    @layer base {
+      body {
+        font-family: var(--font-primary, 'Inter', sans-serif) !important;
+        font-weight: var(--font-primary-weight, 400) !important;
+        letter-spacing: var(--font-primary-spacing, normal);
+        color: var(--font-primary-color, #374151);
+      }
+
+      .dark body {
+        color: #d1d5db;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: var(--font-secondary, 'Poppins', sans-serif) !important;
+        font-weight: var(--font-secondary-weight, 700) !important;
+        letter-spacing: var(--font-secondary-spacing, normal);
+        color: var(--font-secondary-color, #111827);
+      }
+
+      .dark h1,
+      .dark h2,
+      .dark h3,
+      .dark h4,
+      .dark h5,
+      .dark h6 {
+        color: #f9fafb;
+      }
+    }
+
+    /* Helper classes to apply brand colors */
+    .focus-ring-secondary:focus {
+      --tw-ring-opacity: 1;
+      --tw-ring-color: var(--color-secondary, #6366f1);
+      box-shadow: 0 0 0 2px var(--tw-ring-color);
+    }
+
+    .hover-text-accent:hover {
+      color: var(--color-accent, #ec4899);
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/index.tsx"></script>
+</body>
+
+</html>
