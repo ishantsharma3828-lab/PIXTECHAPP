@@ -160,8 +160,9 @@ e:/pt app/
 ├── constants/               ← TypeScript types & enums for every entity
 ├── db/                      ← WatermelonDB schema & model definitions
 ├── electron/                ← Electron main process & preload scripts
-├── data/                    ← Static JSON (Algeria states & communes)
-└── utils/                   ← Search & filter helpers
+├── data/                    ← Static JSON (Algeria states & communes for shipping validation)
+├── utils/                   ← Search & filter helpers
+└── instareel-thumbnail-pro/ ← [SUB-PROJECT] Standalone Mobile/Web AI Thumbnail App (Google Gemini + Capacitor)
 ```
 
 ---
@@ -673,7 +674,7 @@ Full store configuration. Divided into sections:
 | **Billing** | Allow discounts, max discount %, allow price tier change |
 | **Staff Roles** | Which tabs each role can access (tab-level override) |
 | **ZR Express** | API key, tenant ID, base URL |
-| **Supabase** | Backend URL & anon key for cloud sync |
+| **Backend** | Backend API URL & credentials for cloud sync |
 | **Language** | Arabic / French / English (full UI translation system) |
 | **Theme** | Light / Dark mode toggle |
 
@@ -714,6 +715,12 @@ Generates aggregated business reports from raw data in localStorage. Revenue by 
 
 ### exportService.ts
 Uses ExcelJS to generate formatted `.xlsx` spreadsheets for: sales log, inventory, expenses, contacts, debt report. Applies column formatting, headers, and filters.
+
+### shippingService.ts & zrApi.ts
+Handles all operations for ZR Express courier delivery. `createZRExpressOrder()` constructs shipping manifests and sends request packets, while `fetchBorderaux()` queries PDFs directly from the ZR Express API. Includes automatic address validation utilizing local Algerian communes data.
+
+### imageService.ts
+Manages offline product and intake images using **IndexedDB Blob storage**. It handles local compression of images, generates temporary blob URLs for rendering, and schedules uploads to cloud storage via `apiBridge.storage` once internet connectivity is restored.
 
 ---
 
@@ -765,6 +772,16 @@ npm run dev
 The app will start at **http://localhost:3000**
 
 The app works 100% offline — no backend or database setup required. All data is saved to your browser's localStorage.
+
+### Running the Standalone AI Thumbnail App
+
+To run the InstaReel Thumbnail Pro sub-project:
+```bash
+cd instareel-thumbnail-pro
+npm install
+npm run dev
+```
+Make sure to copy the `GEMINI_API_KEY` to `instareel-thumbnail-pro/.env.local` to enable the Gemini 2.5 Flash Arabic title generator.
 
 ### Optional: Cloud Sync Backend (Titan Stack)
 1. Set up a PostgreSQL database (you can host one for free at [supabase.com](https://supabase.com)).
@@ -828,6 +845,26 @@ VITE_BACKEND_READY=false
 # Google Gemini API key for AI features
 GEMINI_API_KEY=your-gemini-api-key-here
 ```
+
+---
+
+## 11. Standalone Sub-Project: InstaReel Thumbnail Pro
+
+Located in the [instareel-thumbnail-pro](file:///e:/pt%20app/instareel-thumbnail-pro) directory, this is a standalone utility application designed for the marketing team to generate custom, high-impact thumbnails and titles for Instagram Reels.
+
+### Key Features
+- **Gemini 2.5 Flash Integration**: Generates creative, punchy Arabic reel titles based on a topic (prompt), designed to maximize viewer click-through rate.
+- **Canvas Editor Workspace**: Add text, choose typography, apply watermarks, adjust colors, and build thumbnail visual overlays.
+- **Mobile Packaging (Capacitor)**: Equipped with Capacitor Core and Capacitor Filesystem wrappers to package and run natively on Android devices.
+- **Prebuilt APK Artifacts**:
+  - [PIX_TECH_APP-debug.apk](file:///e:/pt%20app/instareel-thumbnail-pro/PIX_TECH_APP-debug.apk) (Custom branded Android debug build)
+  - [app-debug.apk](file:///e:/pt%20app/instareel-thumbnail-pro/app-debug.apk) (Standard Android debug build)
+
+### Directory Structure
+- `components/` — Canvas editor, editor settings, watermark adjustments.
+- `services/geminiService.ts` — Connects to Gemini API using `@google/genai` to parse JSON lists of titles.
+- `android/` — Native Android Studio packaging directories.
+- `capacitor.config.json` — Capacitor packaging setup.
 
 ---
 
