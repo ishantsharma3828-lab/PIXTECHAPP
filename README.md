@@ -72,15 +72,16 @@ The application runs in the browser as a **React SPA (Single Page Application)**
 │                            │                                         │
 │                    ┌───────▼────────┐                               │
 │                    │   Services Layer│                               │
-│                    │  (localStorage) │                               │
+│                    │ (WatermelonDB & │                               │
+│                    │  localStorage)  │                               │
 │                    │  + API Bridge   │                               │
 │                    └───────┬────────┘                               │
 │                            │                                         │
 │              ┌─────────────┼──────────────┐                         │
 │              │             │              │                          │
 │      ┌───────▼──┐  ┌───────▼──┐  ┌───────▼──┐                     │
-│      │localStorage│  │Supabase  │  │ZR Express│                     │
-│      │(Offline)  │  │(Cloud DB)│  │  API     │                     │
+│      │Local DB & │  │Node.js   │  │ZR Express│                     │
+│      │localStorage│  │Backend   │  │  API     │                     │
 │      └───────────┘  └──────────┘  └──────────┘                     │
 └─────────────────────────────────────────────────────────────────────┘
 ```
@@ -765,10 +766,11 @@ The app will start at **http://localhost:3000**
 
 The app works 100% offline — no backend or database setup required. All data is saved to your browser's localStorage.
 
-### Optional: Cloud Backend (Supabase)
-1. Create a free project at [supabase.com](https://supabase.com)
-2. Run `supabase_schema.sql` in the Supabase SQL editor
-3. Copy your Project URL and Anon Key into the app's Settings → Supabase section
+### Optional: Cloud Sync Backend (Titan Stack)
+1. Set up a PostgreSQL database (you can host one for free at [supabase.com](https://supabase.com)).
+2. Run the `supabase_schema.sql` script on your PostgreSQL database to set up the necessary tables and Row Level Security (RLS).
+3. Configure your custom Node.js backend server (Titan Stack) to connect to your PostgreSQL database.
+4. Set the backend API URL in your `.env` file (`VITE_API_URL=http://localhost:4000`) and enable sync by setting `VITE_BACKEND_READY=true`.
 
 ### Build for Production
 ```bash
@@ -799,39 +801,32 @@ npm run build
 #### Local (Offline Mode — no setup needed)
 The app works fully offline. All data is stored in your **browser's localStorage**. No database credentials required.
 
-#### Cloud Database (Supabase / PostgreSQL)
+#### Cloud Database (PostgreSQL via Node.js Backend)
 
-If you want cloud sync across multiple devices, set up a free Supabase project:
+To sync data across multiple devices, connect the POS app to the custom Node.js backend which interfaces with PostgreSQL:
 
 | Setting | Value |
 |---------|-------|
-| **Platform** | [supabase.com](https://supabase.com) — free tier available |
-| **Database** | PostgreSQL (managed by Supabase) |
-| **Schema file** | `supabase_schema.sql` (run this in Supabase SQL Editor) |
-| **Default DB user** | `postgres` (Supabase managed — you don't set this manually) |
-| **Default DB password** | Set during Supabase project creation |
+| **Database** | PostgreSQL (hosted locally or via managed services like Supabase) |
+| **Schema file** | `supabase_schema.sql` (run this in your PostgreSQL database) |
+| **Backend Server** | Custom Node.js backend (Titan Stack) |
 
 **Steps to connect:**
-1. Go to [supabase.com](https://supabase.com) → New Project
-2. Choose a project name, database password, and region
-3. In the SQL Editor, paste and run the contents of `supabase_schema.sql`
-4. Go to **Project Settings → API** and copy:
-   - **Project URL** (looks like `https://xxxx.supabase.co`)
-   - **Anon/Public Key**
-5. Open the app → Settings → Supabase → paste both values → Save
+1. Configure your Node.js backend with your PostgreSQL database credentials.
+2. In your `.env` file, set `VITE_API_URL` to point to your Node.js server (e.g. `VITE_API_URL=http://localhost:4000`).
+3. Set `VITE_BACKEND_READY=true` in your `.env` to enable online sync.
 
 #### Environment Variables (.env)
 
 ```env
-# Backend API (local dev server if using custom backend)
+# Backend API (URL of your custom Node.js server)
 VITE_API_URL=http://localhost:4000
 
-# Supabase (cloud PostgreSQL)
-VITE_SUPABASE_URL=https://YOUR_PROJECT.supabase.co
-VITE_SUPABASE_ANON_KEY=YOUR_ANON_KEY
+# Set to "true" once your Node.js backend server is running.
+VITE_BACKEND_READY=false
 
-# WatermelonDB (offline local DB name)
-VITE_DB_NAME=posdb_v1
+# Google Gemini API key for AI features
+GEMINI_API_KEY=your-gemini-api-key-here
 ```
 
 ---
