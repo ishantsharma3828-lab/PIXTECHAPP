@@ -65,7 +65,7 @@ export const createRMA = (data: Partial<RMA>): RMA => {
             title: 'New RMA Created',
             message: `RMA ${saved.rmaNumber} has been logged by ${user.username}.`,
             type: 'info',
-            roleTarget: ['admin', 'manager']
+            audience: 'admin'
         });
     }
 
@@ -94,7 +94,6 @@ export const updateRMAStatus = (id: string, status: RMAStatus, extraData?: Parti
             title: 'RMA Status Updated',
             message: `RMA ${updated.rmaNumber} is now ${status}.`,
             type: status === 'closed' ? 'success' : 'info',
-            roleTarget: ['admin', 'manager', 'cashier']
         });
     }
 

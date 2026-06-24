@@ -15,6 +15,15 @@ const UserSettingsPanel: React.FC<UserSettingsPanelProps> = ({ initialTab = 'gen
     const [activeTab, setActiveTab] = useState<'general' | 'security' | 'notifications' | 'activity'>(initialTab);
     const [currentUser, setCurrentUser] = useState<AppUser | null>(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [activities, setActivities] = useState<any[]>([]);
+
+    useEffect(() => {
+        if (currentUser?.id) {
+            userService.getUserActivity(currentUser.id).then(res => {
+                setActivities(res || []);
+            }).catch(e => console.error("Error loading user activities", e));
+        }
+    }, [currentUser?.id]);
 
     // Form States
     const [formData, setFormData] = useState({
@@ -436,7 +445,7 @@ const UserSettingsPanel: React.FC<UserSettingsPanelProps> = ({ initialTab = 'gen
                             <p className="text-sm text-slate-500">A log of your recent actions on the platform.</p>
                         </div>
                         <div className="space-y-4">
-                            {userService.getUserActivity(currentUser.id).map((log, idx) => (
+                            {activities.map((log, idx) => (
                                 <div key={log.id || idx} className="flex gap-4 p-4 bg-slate-50 dark:bg-gray-900/50 rounded-lg border border-gray-100 dark:border-zinc-800">
                                     <div className={`w-2 h-full self-stretch rounded-full flex-shrink-0 ${log.type === 'success' ? 'bg-green-500' :
                                         log.type === 'warning' ? 'bg-orange-500' :
@@ -451,7 +460,7 @@ const UserSettingsPanel: React.FC<UserSettingsPanelProps> = ({ initialTab = 'gen
                                     </div>
                                 </div>
                             ))}
-                            {userService.getUserActivity(currentUser.id).length === 0 && (
+                            {activities.length === 0 && (
                                 <p className="text-slate-500 italic text-center py-10 bg-slate-50 dark:bg-gray-900/50 rounded-lg border border-dashed border-slate-300 dark:border-zinc-800">No recent activity logged.</p>
                             )}
                         </div>

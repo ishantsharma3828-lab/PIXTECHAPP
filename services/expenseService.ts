@@ -47,7 +47,7 @@ export const createExpense = (data: Omit<Expense, 'id' | 'status'>, username: st
         title: 'New Expense Submitted',
         message: `${username} submitted an expense for ${saved.amount.toFixed(2)}. Needs approval.`,
         type: 'info',
-        roleTarget: ['admin', 'manager']
+        audience: 'admin'
     });
 
     return saved;
@@ -72,7 +72,6 @@ export const updateExpenseStatus = (id: string, status: ExpenseStatus, username:
         title: 'Expense Status Updated',
         message: `Expense ${updated.id} is now ${status}.`,
         type: status === 'approved' ? 'success' : status === 'rejected' ? 'error' : 'info',
-        roleTarget: ['admin', 'manager', 'cashier']
     });
 
     return updated;

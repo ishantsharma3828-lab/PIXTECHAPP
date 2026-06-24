@@ -43,14 +43,20 @@ const RepairService: React.FC = () => {
         customerId: '', // Could link to actual user if logged in
         customerName: `${formData.firstName} ${formData.lastName}`,
         customerPhone: formData.phone,
-        deviceType: finalDeviceType,
-        brand: formData.brand,
-        model: formData.model,
-        serialNumber: formData.serialNumber,
-        password: formData.password,
+        devices: [
+          {
+            id: `dev_${Date.now()}`,
+            type: finalDeviceType,
+            brand: formData.brand,
+            model: formData.model,
+            serialNumber: formData.serialNumber,
+            password: formData.password,
+            conditionNotes: 'Intake Condition: Screen/Ports/Body/Battery OK',
+            condition,
+            accessories: 'None'
+          }
+        ],
         problemDescription: formData.problemDescription,
-        condition,
-        accessories: 'None',
         urgency: 'normal'
       });
       

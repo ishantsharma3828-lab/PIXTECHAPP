@@ -385,38 +385,36 @@ Complete history of all sales transactions.
 
 Repair shop ticket management system.
 
-**Three-panel layout:**
-1. **Left** — list of all tickets with status badges and quick search
-2. **Center** — ticket creation form (new tickets) or ticket details workspace
-3. **Right** — customer info, device info, repair history
+#### 1. Three-Panel Layout
+* **Left Panel:** List of all service tickets with status badges and quick search.
+* **Center Panel:** Ticket creation form (for new devices) or the detailed Ticket Details Workspace.
+* **Right Panel:** Customer CRM info, device specifications, and history of past repairs for that customer.
 
-**Ticket lifecycle:**
+#### 2. Ticket Lifecycle
 ```
-New → Diagnosed → Waiting for Parts → In Repair → Quality Check → Ready → Delivered
+Intake ──> Diagnosis ──> Pending Admin ──> Pending Customer ──> Repair ──> Quality Control ──> Ready ──> Closed
 ```
 
-**Creating a ticket:**
-- Customer info (search existing or create new)
-- **Multi-device support** — one ticket can cover multiple devices (e.g., laptop + mouse + GPU)
-- Device details: type, brand, model, serial number, reported problem
-- Reported problem description (customer's words)
-- Intake photos (upload device condition on arrival)
-- Estimated cost (shown to staff, used to generate invoice)
-- Technician assignment
+#### 3. Creating a Ticket
+* Customer info (link to CRM or create on the fly).
+* **Multi-device support:** One ticket can cover multiple devices (e.g., laptop + monitor).
+* Device details: Type, brand, model, serial number, password/unlock code, condition checks (Screen/Ports/Body/Battery OK status), and accessories left behind (cables, bags, etc.).
+* Intake photos: Upload snapshots of the device's condition upon arrival.
 
-**Ticket workspace (technician view):**
-- Internal notes / diagnosis notes (not visible to customer)
-- Parts used (deducted from inventory)
-- Labor cost entry
-- Status progression buttons
-- Technician can see their own price / cost price. Customer invoice is generated based on the **admin-adjusted price** (not the technician's internal estimate)
+#### 4. The Repairman (Technician) Account Mechanism & Pricing
+The Repairman account (default login: `repairman@pos.com` / `repair123`) is strictly tailored for diagnostic and repair tasks:
+* **Interface Restraints:** Restricted to **Dashboard**, **Inventory (read-only)**, and **Service Desk**. They cannot access POS billing, CRM, RMA, expenses, or settings.
+* **Price Visibility:** Only sees **Price 1 (Retail)**. Tiered prices (Price 2–4) and the raw **Cost Price** of parts are hidden.
+* **Tech Quote Entry:** In the `diagnosis` stage, the technician documents findings and logs the raw estimate (Labor Cost + required Parts from inventory).
+* **Submit for Approval:** Clicking "Submit for Approval" locks the ticket for the technician and moves it to `pending_admin`.
 
-**Printing:**
-- Print customer receipt (thermal 80mm or A4)
-- Print internal work order (for technicians)
-- Print delivery receipt when device is returned
-
-**Key rule:** Admin can adjust the repair price after the technician logs it. The **customer invoice always shows the admin-adjusted price**. The **technician invoice always shows the original technician price**. This prevents price confusion between internal costs and customer-facing charges.
+#### 5. Admin Review & Pricing Separation
+* **Internal vs. External Pricing:** The `pending_admin` and `pending_customer` stages are **hidden** from pure technicians.
+* **Admin Markup:** An Admin or Manager reviews the ticket and can adjust prices in `ticket.adminReview` (e.g., adding markup to labor or parts).
+* **Workflow Resumption:** Once the customer approves, the ticket returns to the technician in `repair` status.
+* **Document Printing Rules:**
+  * **Printed by Tech:** Outputs the **Tech Quote** (their original internal numbers).
+  * **Printed by Admin / Cashier:** Outputs the **Admin-Adjusted Quote** (the client-facing final prices). The customer never sees the internal technician costs.
 
 ---
 

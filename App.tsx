@@ -17,7 +17,6 @@ import Billing from './pages/Billing';
 import SalesLog from './pages/SalesLog';
 import PCConfigurator from './pages/PCConfigurator';
 import ServiceDesk from './pages/ServiceDesk';
-import IncomingStock from './pages/IncomingStock';
 import Expenses from './pages/Expenses';
 import Contacts from './pages/Contacts';
 import RMA from './pages/RMA';

@@ -58,7 +58,7 @@ const DeliveryManager: React.FC = () => {
                         title: 'Delivery Returned',
                         message: `Order ${saleId} was returned by the courier.`,
                         type: 'warning',
-                        roleTarget: ['admin', 'manager']
+                        audience: 'admin'
                     });
                 }
             }

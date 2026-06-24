@@ -126,7 +126,7 @@ export const usePermissions = (): Permissions => {
     const isCashier      = has('cashier');
     const isCommercial   = has('commission_commercial');
     const isCommercial2  = has('commission_commercial2');
-    const isRepairman    = has('repairman');
+    const isRepairman    = has('technician', 'repairman');
     const isSpecialClient = has('special_client');
     const isCustomer     = !isManager && !isCashier && !isCommercial && !isCommercial2 && !isRepairman && !isSpecialClient;
 

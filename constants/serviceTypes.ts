@@ -43,7 +43,7 @@ export interface ServiceItem {
 }
 
 export interface DiagnosisPart {
-    id: number;
+    id: string;
     name: string;
     qty: number;
     price: number;

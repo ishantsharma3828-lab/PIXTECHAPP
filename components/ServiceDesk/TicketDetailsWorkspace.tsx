@@ -193,7 +193,7 @@ const TicketDetailsWorkspace: React.FC<TicketDetailsWorkspaceProps> = ({ ticket,
             deposit: ticket.deposit,
             currencySymbol: settings.currencySymbol,
             companyName: settings.companyName,
-            companyPhone: settings.storePhone,
+            companyPhone: settings.companyPhones?.[0] || '',
         };
         printTicket(data, format);
     };

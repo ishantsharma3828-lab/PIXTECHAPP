@@ -100,7 +100,6 @@ const TicketCreationPanel: React.FC<TicketCreationPanelProps> = ({ onCreate }) =
             devices: formattedDevices,
             problemDescription,
             urgency,
-            status: requiresApproval ? 'pending_approval' : 'intake' as any,
         });
 
         alert(requiresApproval ? "Ticket submitted for approval." : "Ticket Created Successfully!");

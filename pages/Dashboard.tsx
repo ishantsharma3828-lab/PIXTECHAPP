@@ -96,7 +96,7 @@ const Dashboard: React.FC = () => {
 
         // Compute Today's Expenses
         expenses.forEach(exp => {
-          if (exp.status === 'active' && new Date(exp.date).toDateString() === todayStr) {
+          if (exp.status !== 'rejected' && exp.status !== 'cancelled' && new Date(exp.date).toDateString() === todayStr) {
             todayExpenses += exp.amount;
           }
         });
