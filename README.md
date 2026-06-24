@@ -97,7 +97,7 @@ The application runs in the browser as a **React SPA (Single Page Application)**
 | Build Tool | Vite 6 |
 | Desktop | Electron 41 |
 | Database (cloud) | Supabase (PostgreSQL + Row Level Security) |
-| Database (local) | Browser `localStorage` (offline-first) |
+| Database (local) | WatermelonDB (IndexedDB/SQLite) + localStorage |
 | Courier API | ZR Express REST API |
 | Exports | ExcelJS (spreadsheets) |
 
@@ -106,7 +106,7 @@ The application runs in the browser as a **React SPA (Single Page Application)**
 This stack was carefully selected to meet the demanding requirements of a high-performance, cost-effective, and highly scalable retail and repair business:
 
 - **Frontend (React 19 + TypeScript + Vite 6)**: Chosen for maximum speed, fast UI updates, and robust typing. React 19 provides modern state management, and Vite 6 ensures instant loading times and clean production bundles.
-- **Local Database (Browser `localStorage`)**: Provides sub-millisecond response times for POS operations. By caching everything locally, we achieve an **offline-first** design where sales and repairs can be processed without waiting for network calls or facing internet downtime.
+- **Local Database (WatermelonDB + localStorage)**: WatermelonDB provides reactive, lazy-loaded local storage optimized for high-performance React SPAs. On the web, it uses a `LokiJS` adapter to persist to `IndexedDB` or `localStorage`; for native platform builds (Electron / Capacitor), it integrates directly with high-speed `SQLite`. This ensures sub-millisecond local queries, reactive data streams, and offline-first availability.
 - **Cloud Sync Database (Supabase / PostgreSQL)**: Supabase is built on top of **PostgreSQL**, the gold standard for relational database performance. It was specifically selected to ensure the application is **fully scalable**, has **excellent query performance**, and remains **completely free** even when handling huge datasets (thanks to Supabase's generous free tier and PostgreSQL's efficient indexing and storage).
 
 ---
@@ -167,19 +167,18 @@ e:/pt app/
 
 ## 4. Backend & Database
 
-### Offline-First (localStorage)
+### Offline-First Architecture (WatermelonDB + localStorage)
 
-Every module stores its data in **browser localStorage** under specific keys:
+The application uses a hybrid offline-first storage engine:
+1. **WatermelonDB (Core Relational Engine)**: Core entities (Products, Sales, Customers, Users, and Repair Tickets) are managed via WatermelonDB. It uses the `LokiJS` adapter in web/Vite mode (persisting to IndexedDB) and is configured to support the native `SQLite` adapter for native wrappers (Electron/Capacitor). This ensures high performance for querying huge datasets (using lazy-loaded records, reactive subscriptions, and indexing).
+2. **Browser LocalStorage (Auxiliary Datastore)**: Lightweight or configuration-heavy modules store their data under specific keys.
+
+#### Local Storage Mapping:
 
 | Key | What's stored |
 |-----|--------------|
-| `pos_products` | Full product catalog |
-| `pos_sales_history` | All completed sales |
-| `pos_service_tickets` | Repair & service tickets |
 | `pos_expenses` | Expense records |
 | `pos_rma_db` | RMA / return cases |
-| `pos_users_db` | Staff user accounts |
-| `pos_contacts` | Customer & supplier contacts |
 | `pos_activity_log` | Audit log of all actions |
 | `pos_notifications` | In-app notification queue |
 | `pos_user` | Currently logged-in user session |
@@ -187,7 +186,17 @@ Every module stores its data in **browser localStorage** under specific keys:
 | `pos_purchase_orders` | Incoming stock / purchase orders |
 | `pos_debt_db` | Outstanding debt records |
 
-This means **the app works 100% offline** — no internet connection required. Data is instantly available, and all operations (sales, repairs, inventory edits) work without a server.
+#### WatermelonDB Collection Mapping:
+
+| Collection | Model Class | What's stored |
+|------------|-------------|---------------|
+| `products` | `Product` | Full product catalog with price tiers |
+| `customers` | `Customer` | Customer CRM with loyalty points & tiers |
+| `sales` | `Sale` | Completed transaction history |
+| `repair_tickets` | `RepairTicket` | Repair workspace & service desk tickets |
+| `users` | `User` | Staff accounts & authorization details |
+
+This hybrid design means **the app works 100% offline** — no internet connection required. Data is instantly available, and all operations (sales, repairs, inventory edits) work without a server.
 
 ### Cloud Sync (Supabase)
 
@@ -219,14 +228,14 @@ apiBridge.sync.pull()     → GET  /api/sync/pull  (fetch changes)
 
 ### Database Selection Rationale: Performance, Scalability & Zero-Cost
 
-The database architecture employs a hybrid strategy combining local **`localStorage`** and cloud **Supabase (PostgreSQL)**. This was designed specifically with these priorities:
+The database architecture employs a hybrid strategy combining local **WatermelonDB** (for high-speed relational queries) / **localStorage** (for auxiliary data) and cloud **Supabase (PostgreSQL)**. This was designed specifically with these priorities:
 
 #### 1. Scalability for Huge Datasets
 * **PostgreSQL Engine**: Supabase uses PostgreSQL, the most robust open-source relational database in the world. It uses B-Tree indexing, optimized query plans, and supports complex relational operations. Even with millions of products, customers, and sales logs, query performance remains top-tier.
 * **JSONB Storage**: Payments and cart items are stored in PostgreSQL's native binary JSON (`JSONB`) columns, allowing quick, indexable document querying without database slowdowns.
 
 #### 2. Speed and Best Performance
-* **Zero Network Latency**: In-store sales require speed. By prioritizing `localStorage` for immediate reads and writes, transaction processing is instant.
+* **Zero Network Latency**: In-store operations require speed. By leveraging **WatermelonDB's** reactive memory layer and local data queries, searches, stock updates, and ticket lookups happen instantly, completely bypassing network round-trips.
 * **Non-Blocking Background Sync**: Data is synced to the cloud asynchronously. If the network is slow or down, the cashiers and technicians never experience lag.
 
 #### 3. 100% Fully Free (No Monthly Server Costs)
