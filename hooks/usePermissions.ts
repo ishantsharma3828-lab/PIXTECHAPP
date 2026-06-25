@@ -78,23 +78,28 @@ const ALL_TABS = new Set([
   'service-desk', 'expenses', 'rma', 'contacts', 'zr-orders',
   'delivery-manager', 'debt-manager',
   'user-management', 'business-rules', 'settings', 'staff-panel',
+  'employee-tracker', 'admin-monitor',  // Tracker tabs
 ]);
 
 const CASHIER_TABS = new Set([
   'dashboard', 'inventory', 'billing', 'sales-log', 'pc-configurator',
   'service-desk', 'expenses', 'rma', 'contacts', 'zr-orders', 'delivery-manager',
+  'employee-tracker',  // All staff get tracker
 ]);
 
 const COMMERCIAL_TABS = new Set([
   'dashboard', 'inventory', 'billing', 'sales-log', 'pc-configurator',
+  'employee-tracker',
 ]);
 
 const REPAIRMAN_TABS = new Set([
   'dashboard', 'inventory', 'service-desk',
+  'employee-tracker',
 ]);
 
 const SPECIAL_CLIENT_TABS = new Set([
   'dashboard', 'inventory',
+  'employee-tracker',
 ]);
 
 // ─── Payment methods available to non-manager roles ───────────────────────────

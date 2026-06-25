@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">
+  <rect width="160" height="160" rx="28" fill="#111827"/>
+  <rect x="22" y="48" width="104" height="58" rx="12" fill="#4c1d95"/>
+  <circle cx="58" cy="77" r="20" fill="#0b1220" stroke="#a78bfa" stroke-width="5"/>
+  <circle cx="94" cy="77" r="20" fill="#0b1220" stroke="#a78bfa" stroke-width="5"/>
+  <path d="M126 62h12v30h-12M34 118h78" stroke="#e9d5ff" stroke-width="7" stroke-linecap="round"/>
+  <text x="80" y="139" text-anchor="middle" font-family="Arial" font-size="18" font-weight="700" fill="#f5f3ff">GPU</text>
+</svg>
